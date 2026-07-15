@@ -118,5 +118,4 @@ venv.bak/
 .streamlit/
 
 # Trained ML Models (should be generated via python train_model.py)
-*.pkl
 *.log
