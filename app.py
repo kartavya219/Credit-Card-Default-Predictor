@@ -1,8 +1,3 @@
-"""
-Credit Card Default Prediction - Streamlit Application
-Author: Senior ML Engineer
-"""
-
 import streamlit as st
 import pandas as pd
 import numpy as np
@@ -13,112 +8,9 @@ import os
 st.set_page_config(
     page_title="Credit Card Default Prediction",
     page_icon="💳",
-    layout="wide",
-    initial_sidebar_state="collapsed"
+    layout="wide"
 )
 
-# Custom Premium CSS Styling for visual excellence (Dark/Glassmorphism theme accents)
-# st.markdown("""
-#     <style>
-#     @import url('https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;800&display=swap');
-    
-#     html, body, [class*="css"] {
-#         font-family: 'Outfit', sans-serif;
-#     }
-    
-#     .main {
-#         background-color: #0d1117;
-#         color: #c9d1d9;
-#     }
-    
-#     div[data-testid="stBlock"] {
-#         background-color: #161b22;
-#         border-radius: 12px;
-#         padding: 20px;
-#         border: 1px solid #30363d;
-#         margin-bottom: 20px;
-#     }
-    
-#     h1, h2, h3 {
-#         color: #ffffff !important;
-#         font-weight: 800 !important;
-#     }
-    
-#     .title-text {
-#         text-align: center;
-#         background: linear-gradient(90deg, #58a6ff, #bc8cff);
-#         -webkit-background-clip: text;
-#         -webkit-text-fill-color: transparent;
-#         font-size: 3rem;
-#         margin-bottom: 5px;
-#     }
-    
-#     .subtitle-text {
-#         text-align: center;
-#         color: #8b949e !important;
-#         font-size: 1.25rem !important;
-#         font-weight: 400 !important;
-#         margin-bottom: 30px;
-#     }
-    
-#     .stButton>button {
-#         width: 100%;
-#         background: linear-gradient(90deg, #1f6feb, #8e2de2);
-#         color: white;
-#         border: none;
-#         padding: 12px 20px;
-#         border-radius: 8px;
-#         font-size: 1.1rem;
-#         font-weight: bold;
-#         transition: all 0.3s ease;
-#     }
-    
-#     .stButton>button:hover {
-#         background: linear-gradient(90deg, #58a6ff, #bc8cff);
-#         box-shadow: 0 0 15px rgba(88, 166, 255, 0.4);
-#         transform: translateY(-2px);
-#     }
-    
-#     .prediction-card {
-#         padding: 25px;
-#         border-radius: 12px;
-#         text-align: center;
-#         margin-top: 20px;
-#         border: 2px solid;
-#     }
-    
-#     .safe-card {
-#         background-color: rgba(46, 117, 89, 0.15);
-#         border-color: #2ea043;
-#         color: #56d364;
-#     }
-    
-#     .risk-card {
-#         background-color: rgba(248, 81, 73, 0.15);
-#         border-color: #f85149;
-#         color: #ff7b72;
-#     }
-    
-#     .result-title {
-#         font-size: 2.2rem;
-#         font-weight: 800;
-#         margin-bottom: 10px;
-#     }
-    
-#     .probability-label {
-#         font-size: 1.2rem;
-#         color: #8b949e;
-#         margin-top: 15px;
-#         margin-bottom: 5px;
-#     }
-    
-#     .probability-val {
-#         font-size: 3rem;
-#         font-weight: 800;
-#         margin-bottom: 15px;
-#     }
-#     </style>
-# """, unsafe_allow_html=True)
 
 # Load cached artifacts
 @st.cache_resource
@@ -214,24 +106,25 @@ def predict_default(processed_features):
 
 # ----------------- UI Rendering -----------------
 
-st.markdown('<div class="title-text">Credit Card Default Prediction</div>', unsafe_allow_html=True)
-st.markdown('<div class="subtitle-text">Customer Information</div>', unsafe_allow_html=True)
+st.markdown("<h1 style='text-align: center;'>Credit Card Default Prediction</h1>", unsafe_allow_html=True)
+st.markdown("<h2 style='text-align: center;'>Customer Information</h3><br>", unsafe_allow_html=True)
+
 
 # Main form layout
 with st.container():
-    st.write("### Demographic & Account Profile")
+    st.markdown("<h3 style='text-align: center;'>Demographic & Account Profile</h3><br>", unsafe_allow_html=True)
     col1, col2, col3 = st.columns(3)
     
     with col1:
         limit_bal = st.number_input(
-            "Credit Limit (LIMIT_BAL)", 
-            min_value=0.0, 
-            value=50000.0, 
-            step=1000.0, 
+            "Credit Limit", 
+            min_value=0, 
+            value=50000, 
+            step=1000, 
             help="Total credit limit of the customer (cannot be negative)"
         )
         age = st.number_input(
-            "Age (AGE)", 
+            "Age", 
             min_value=0, 
             max_value=120, 
             value=30, 
@@ -241,26 +134,26 @@ with st.container():
         
     with col2:
         sex = st.selectbox(
-            "Gender (SEX)", 
+            "Gender", 
             options=["Male", "Female"],
             help="Gender classification of the customer"
         )
         education = st.selectbox(
-            "Education Level (EDUCATION)", 
+            "Education Level", 
             options=["Graduate School", "University", "High School", "Others"],
             help="Highest completed education level"
         )
         
     with col3:
         marriage = st.selectbox(
-            "Marital Status (MARRIAGE)", 
+            "Marital Status", 
             options=["Married", "Single", "Others"],
             help="Marital status of the customer"
         )
 
 # Monthly billing metrics tabs/columns to present inputs cleanly
 with st.container():
-    st.write("### Payment History Details")
+    st.markdown("<br><h3 style='text-align: center;'>Payment History Details</h3><br>", unsafe_allow_html=True)
     
     # We group the 6 monthly columns side by side
     month_cols = st.columns(6)
@@ -278,7 +171,7 @@ with st.container():
             # Repayment status input
             # Values: -2 = No consumption, -1 = Paid in full, 0 = Revolving, 1 = Delay 1 month, etc.
             status = st.number_input(
-                f"Status (PAY_{idx*2 if idx > 0 else 0})",
+                f"Status",
                 min_value=-2,
                 max_value=9,
                 value=0,
@@ -290,7 +183,7 @@ with st.container():
             
             # Bill amount input
             bill = st.number_input(
-                f"Bill Amt (BILL_AMT{idx+1})",
+                f"Bill Amount",
                 value=0.0,
                 step=100.0,
                 key=f"bill_amt_{idx}",
@@ -300,7 +193,7 @@ with st.container():
             
             # Pay amount input
             pay = st.number_input(
-                f"Paid Amt (PAY_AMT{idx+1})",
+                f"Paid Amount",
                 min_value=0.0,
                 value=0.0,
                 step=100.0,
