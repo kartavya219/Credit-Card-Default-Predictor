@@ -1,6 +1,7 @@
 # Credit Card Default Prediction Application
 
 Link - https://kartavya219-credit-card-default-predictor-app-tpmzts.streamlit.app/
+
 An end-to-end production-quality machine learning web application built using **Python**, **scikit-learn**, and **Streamlit** to predict whether a credit card customer will default on their payment next month.
 
 The model is trained on the UCI Credit Card dataset. It utilizes exactly the same preprocessing pipeline, feature engineering, scaling, and training logic as implemented in the original research notebook.
